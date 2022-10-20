@@ -10,7 +10,7 @@ def load_candidates():
         return json.load(file)
 
 
-def get_all():
+def get_candidates_all():
     """
 
     :return: Повторяет фунцкию load_candidates
@@ -18,7 +18,7 @@ def get_all():
     return load_candidates()
 
 
-def get_by_pk(pk):
+def get_candidates_by_pk(pk):
     """
 
     :param pk: Находим кандидатов по pk
@@ -27,17 +27,26 @@ def get_by_pk(pk):
     for candidate in load_candidates():
         if candidate['pk'] == pk:
             return candidate
+    return None
 
 
-def get_by_skill(skill):
+def get_candidates_by_skills(skill):
     """
 
     :param skill: Находим кандидата по скилу и добавляем в result
     :return: Возвращаем добавленных кандидатов
     """
-    result = []
+    candidates = []
     for candidate in load_candidates():
-        if skill.lower() in candidate['skills'].lower().split(', '):
-            result.append(candidate)
-    return result
+        skills = candidate['skills'].lower().split(', ')
+        if skill in skills:
+            candidates.append(candidate)
+    return candidates
 
+
+def get_candidates_by_name(name):
+    candidates = []
+    for candidate in load_candidates():
+        if name in candidate['name']:
+            candidates.append(candidate)
+    return candidates
